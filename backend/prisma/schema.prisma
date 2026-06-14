@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String   @id @default(uuid())
+  email             String   @unique
+  name              String?
+  passwordHash      String
+  stripeCustomerId  String?
+  subscriptionStatus String  @default("inactive")
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  tasks    Task[]
+  agents   Agent[]
+}
+
+model Agent {
+  id          String   @id @default(uuid())
+  userId      String
+  name        String
+  type        String
+  provider    String   @default("deepseek")
+  model       String   @default("deepseek-chat")
+  systemPrompt String?
+  tools       String[]
+  config      Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tasks Task[]
+}
+
+model Task {
+  id        String   @id @default(uuid())
+  agentId   String
+  userId    String
+  status    String   @default("pending")
+  input     Json
+  output    Json?
+  error     String?
+  startedAt DateTime?
+  completedAt DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  agent Agent @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Subscription {
+  id              String   @id @default(uuid())
+  userId          String   @unique
+  stripeSubId     String?  @unique
+  stripePriceId   String?
+  status          String   @default("inactive")
+  currentPeriodStart DateTime?
+  currentPeriodEnd   DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
