@@ -141,30 +141,40 @@
 ### 4.1 Tables Principales
 
 ```prisma
+enum Role {
+  ADMIN
+  MEMBER
+  VIEWER
+}
+
+enum AgentType {
+  MARKETING
+  FINANCE
+  CUSTOM
+}
+
+enum TaskStatus {
+  PENDING
+  QUEUED
+  RUNNING
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
 model Organization {
   id        String   @id @default(uuid())
   name      String
   slug      String   @unique
+  logo      String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  members     Member[]
-  agents      Agent[]
-  tasks       Task[]
+  members      Member[]
+  agents       Agent[]
+  tasks        Task[]
+  invitations  Invitation[]
   subscription Subscription?
-}
-
-model Member {
-  id             String   @id @default(uuid())
-  organizationId String
-  userId         String
-  role           String   @default("member") // admin, member, viewer
-  createdAt      DateTime @default(now())
-
-  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([organizationId, userId])
 }
 
 model User {
@@ -180,47 +190,77 @@ model User {
 
   members Member[]
   tasks   Task[]
-  agents  Agent[]
+}
+
+model Member {
+  id             String   @id @default(uuid())
+  organizationId String
+  userId         String
+  role           Role     @default(MEMBER)
+  createdAt      DateTime @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([organizationId, userId])
+}
+
+model Invitation {
+  id             String    @id @default(uuid())
+  organizationId String
+  email          String
+  role           Role      @default(MEMBER)
+  token          String    @unique
+  acceptedAt     DateTime?
+  expiresAt      DateTime
+  createdAt      DateTime  @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@unique([organizationId, email])
 }
 
 model Agent {
-  id            String   @id @default(uuid())
+  id             String    @id @default(uuid())
   organizationId String
-  name          String
-  type          String   // marketing, finance, custom
-  description   String?
-  provider      String   @default("deepseek")
-  model         String   @default("deepseek-chat")
-  systemPrompt  String?
-  tools         String[]
-  config        Json?
-  isActive      Boolean  @default(true)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  name           String
+  type           AgentType
+  description    String?
+  provider       String    @default("deepseek")
+  model          String    @default("deepseek-chat")
+  systemPrompt   String?
+  tools          String[]
+  config         Json?
+  isActive       Boolean   @default(true)
+  createdBy      String
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
 
-  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  tasks        Task[]
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdByUser  User         @relation(fields: [createdBy], references: [id])
+  tasks          Task[]
 }
 
 model Task {
-  id            String    @id @default(uuid())
+  id             String     @id @default(uuid())
   organizationId String
-  agentId       String
-  userId        String
-  title         String
-  instructions  String
-  status        String    @default("pending") // pending, queued, running, completed, failed, cancelled
-  input         Json?
-  output        Json?
-  error         String?
-  startedAt     DateTime?
-  completedAt   DateTime?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  agentId        String
+  userId         String
+  title          String
+  instructions   String
+  status         TaskStatus @default(PENDING)
+  input          Json?
+  output         Json?
+  error          String?
+  logs           Json?
+  startedAt      DateTime?
+  completedAt    DateTime?
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
 
   organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  agent        Agent       @relation(fields: [agentId], references: [id], onDelete: Cascade)
-  user         User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  agent        Agent        @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Subscription {
@@ -228,8 +268,8 @@ model Subscription {
   organizationId     String    @unique
   stripeSubId        String?   @unique
   stripePriceId      String?
-  status             String    @default("inactive") // active, inactive, past_due, canceled
-  plan               String    @default("starter") // starter, pro, enterprise
+  status             String    @default("inactive")
+  plan               String    @default("starter")
   tasksIncluded      Int       @default(100)
   tasksUsed          Int       @default(0)
   currentPeriodStart DateTime?
