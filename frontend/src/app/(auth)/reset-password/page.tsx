@@ -11,10 +11,11 @@ export default function ResetPasswordPage() {
           { name: "password", label: "Nouveau mot de passe", type: "password", placeholder: "••••••••", required: true },
           { name: "confirmPassword", label: "Confirmer le mot de passe", type: "password", placeholder: "••••••••", required: true },
         ]}
+        schemaName="resetPassword"
         submitLabel="Réinitialiser"
         footer={
           <span>
-            <Link href="/login" className="font-medium text-accent hover:text-accent/80 transition-colors">
+            <Link href="/signin" className="font-medium text-white hover:text-zinc-300 transition-colors">
               Retour à la connexion
             </Link>
           </span>

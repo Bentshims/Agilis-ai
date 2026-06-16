@@ -36,13 +36,13 @@ export default function Home() {
 
           <div className="flex items-center gap-3">
             <Link
-              href="/login"
+              href="/signin"
               className="text-sm font-medium text-foreground transition-colors hover:text-accent"
             >
               Connexion
             </Link>
             <Link
-              href="/register"
+              href="/signup"
               className="inline-flex h-9 items-center justify-center rounded-lg bg-accent px-4 text-sm font-medium text-accent-foreground shadow-lg shadow-accent/25 transition-all hover:bg-accent/90 hover:shadow-accent/30"
             >
               Essai gratuit
@@ -79,7 +79,7 @@ export default function Home() {
 
             <div className="mt-10 flex items-center justify-center gap-4">
               <Link
-                href="/register"
+                href="/signup"
                 className="inline-flex h-11 items-center justify-center rounded-xl bg-accent px-8 text-sm font-medium text-accent-foreground shadow-lg shadow-accent/25 transition-all hover:bg-accent/90 hover:shadow-accent/30 active:scale-[0.98]"
               >
                 Commencer gratuitement
@@ -331,7 +331,7 @@ export default function Home() {
                       ))}
                     </ul>
                     <Link
-                      href="/register"
+                      href="/signup"
                       className={`mt-8 inline-flex h-10 w-full items-center justify-center rounded-xl text-sm font-medium transition-all ${
                         plan.popular
                           ? "bg-accent text-accent-foreground shadow-lg shadow-accent/25 hover:bg-accent/90"

@@ -10,11 +10,12 @@ export default function ForgotPasswordPage() {
         fields={[
           { name: "email", label: "Email", type: "email", placeholder: "vous@entreprise.com", required: true },
         ]}
+        schemaName="forgotPassword"
         submitLabel="Envoyer le lien"
         footer={
           <span>
             Vous vous souvenir ?{" "}
-            <Link href="/login" className="font-medium text-accent hover:text-accent/80 transition-colors">
+            <Link href="/signin" className="font-medium text-white hover:text-zinc-300 transition-colors">
               Se connecter
             </Link>
           </span>

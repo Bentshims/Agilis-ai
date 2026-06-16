@@ -1,13 +1,5 @@
 import type { Metadata } from "next";
-import { DM_Sans } from "next/font/google";
 import "./globals.css";
-import { cn } from "@/lib/utils";
-
-const dmSans = DM_Sans({
-  subsets: ["latin"],
-  variable: "--font-sans",
-  weight: ["400", "500", "600", "700"],
-});
 
 export const metadata: Metadata = {
   title: "Agilis AI - Intelligent Agent Platform",
@@ -21,7 +13,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" className={cn("h-full antialiased", dmSans.variable)} suppressHydrationWarning>
+    <html lang="fr" className="h-full antialiased" suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
@@ -36,8 +28,10 @@ export default function RootLayout({
             `,
           }}
         />
+        <link rel="icon" href="/favicon-dark.png" media="(prefers-color-scheme: dark)" />
+        <link rel="icon" href="/favicon-white.png" media="(prefers-color-scheme: light)" />
       </head>
-      <body className="min-h-full flex flex-col font-sans">{children}</body>
+      <body className="min-h-full flex flex-col font-sans" suppressHydrationWarning>{children}</body>
     </html>
   );
 }

@@ -1,5 +1,4 @@
 import { AuthForm } from "@/components/auth/auth-form";
-import { OAuthButtons } from "@/components/auth/oauth-buttons";
 import Link from "next/link";
 
 export default function RegisterPage() {
@@ -13,17 +12,17 @@ export default function RegisterPage() {
           { name: "email", label: "Email", type: "email", placeholder: "vous@entreprise.com", required: true },
           { name: "password", label: "Mot de passe", type: "password", placeholder: "••••••••", required: true },
         ]}
+        schemaName="signup"
         submitLabel="Créer mon compte"
         footer={
           <span>
             Déjà un compte ?{" "}
-            <Link href="/login" className="font-medium text-accent hover:text-accent/80 transition-colors">
+            <Link href="/signin" className="font-medium text-white hover:text-zinc-300 transition-colors">
               Se connecter
             </Link>
           </span>
         }
       />
-      <OAuthButtons />
     </div>
   );
 }

@@ -2,8 +2,12 @@ node_modules/
 dist/
 .next/
 turbo/
+.turbo/
 .env
 .env.local
 .env*.local
 *.db
 *.sqlite
+.agents
+*.log
+*.err
