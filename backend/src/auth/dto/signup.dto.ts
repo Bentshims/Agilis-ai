@@ -17,10 +17,4 @@ export class SignupDto {
   @MinLength(2)
   @MaxLength(100)
   name?: string;
-
-  @IsString()
-  @IsOptional()
-  @MinLength(2)
-  @MaxLength(100)
-  workspaceName?: string;
 }

@@ -45,7 +45,7 @@ export class AuthService {
   ) {}
 
   async signup(dto: SignupDto) {
-    const { email, password, name, workspaceName } = dto;
+    const { email, password, name } = dto;
 
     const existing = await this.prisma.user.findUnique({ where: { email } });
     if (existing) {
@@ -64,11 +64,12 @@ export class AuthService {
         },
       });
 
-      const slug = `${slugify(workspaceName ?? displayName)}-${randomBytes(4).toString('hex')}`;
+      const workspaceName = `Espace de travail de ${displayName}`;
+      const slug = `${slugify(displayName)}-${randomBytes(4).toString('hex')}`;
 
       const workspace = await tx.workspace.create({
         data: {
-          name: workspaceName ?? `Espace de travail de ${displayName}`,
+          name: workspaceName,
           slug,
         },
       });

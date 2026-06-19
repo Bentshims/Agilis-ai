@@ -1,14 +1,10 @@
-import { PageTransition } from "@/components/auth/page-transition";
-
-export default function AuthLayout({ children }: { children: React.ReactNode }) {
+export default function OnboardingLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="relative flex min-h-dvh items-center justify-center overflow-hidden bg-black">
-      {/* Logo top-left */}
       <div className="absolute left-7 top-5 z-10 h-10">
-        <img src="/agilis-dark-theme-logo.png" alt="Agilis AI" className="h-full w-auto object-contain" />
+        <img src="/logo-dark.png" alt="Agilis AI" className="h-full w-auto object-contain" />
       </div>
 
-      {/* Top-right bubble */}
       <div
         className="pointer-events-none absolute -right-48 -top-48 h-[700px] w-[700px] rounded-full blur-[100px]"
         style={{
@@ -17,7 +13,6 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         }}
       />
 
-      {/* Bottom-left bubble */}
       <div
         className="pointer-events-none absolute -bottom-48 -left-48 h-[700px] w-[700px] rounded-full blur-[100px]"
         style={{
@@ -26,10 +21,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         }}
       />
 
-      {/* Centered form with page transitions */}
-      <PageTransition>
-        {children}
-      </PageTransition>
+      {children}
     </div>
   );
 }

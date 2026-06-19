@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -15,21 +16,24 @@ export default function RootLayout({
   return (
     <html lang="fr" className="h-full antialiased" suppressHydrationWarning>
       <head>
-        <script
+        <Script
+          id="theme-init"
+          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
             __html: `
               try {
-                document.documentElement.classList.toggle(
-                  'dark',
-                  localStorage.getItem('theme') === 'dark' ||
-                    (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)
-                );
+                var theme = localStorage.getItem('theme');
+                if (theme === 'light') {
+                  document.documentElement.classList.remove('dark');
+                } else {
+                  document.documentElement.classList.add('dark');
+                }
               } catch (e) {}
             `,
           }}
         />
-        <link rel="icon" href="/favicon-dark.png" media="(prefers-color-scheme: dark)" />
-        <link rel="icon" href="/favicon-white.png" media="(prefers-color-scheme: light)" />
+        <link rel="icon" href="/agilis-dark-theme-favicon.png" media="(prefers-color-scheme: dark)" />
+        <link rel="icon" href="/agilis-light-theme-favicon.png" media="(prefers-color-scheme: light)" />
       </head>
       <body className="min-h-full flex flex-col font-sans" suppressHydrationWarning>{children}</body>
     </html>

@@ -104,37 +104,38 @@
 
 .dark {
   --font-sans: 'D-DIN', sans-serif;
+  --background: oklch(0 0 0);
   --foreground: oklch(0.985 0 0);
-  --card: oklch(0.11 0 0);
+  --card: oklch(0.04 0 0);
   --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.11 0 0);
+  --popover: oklch(0.04 0 0);
   --popover-foreground: oklch(0.985 0 0);
   --primary: oklch(0.985 0 0);
   --primary-foreground: oklch(0 0 0);
-  --secondary: oklch(0.18 0 0);
+  --secondary: oklch(0.12 0 0);
   --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.18 0 0);
-  --muted-foreground: oklch(0.65 0 0);
+  --muted: oklch(0.12 0 0);
+  --muted-foreground: oklch(0.55 0 0);
   --accent: oklch(0.985 0 0);
   --accent-foreground: oklch(0 0 0);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.18 0 0);
-  --input: oklch(0.18 0 0);
-  --ring: oklch(0.556 0 0);
+  --border: oklch(0.14 0 0);
+  --input: oklch(0.14 0 0);
+  --ring: oklch(0.45 0 0);
   --chart-1: oklch(0.985 0 0);
   --chart-2: oklch(0.708 0 0);
   --chart-3: oklch(0.556 0 0);
   --chart-4: oklch(0.439 0 0);
   --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.09 0 0);
+  --sidebar: oklch(0.02 0 0);
   --sidebar-foreground: oklch(0.985 0 0);
   --sidebar-primary: oklch(0.985 0 0);
   --sidebar-primary-foreground: oklch(0 0 0);
-  --sidebar-accent: oklch(0.18 0 0);
+  --sidebar-accent: oklch(0.12 0 0);
   --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(0.18 0 0);
-  --sidebar-ring: oklch(0.556 0 0);
+  --sidebar-border: oklch(0.12 0 0);
+  --sidebar-ring: oklch(0.45 0 0);
 }
 
 @layer base {
@@ -149,32 +150,96 @@
   }
 }
 
-@keyframes morph {
-  0%, 100% {
-    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-    transform: translate(0, 0) scale(1);
-  }
-  25% {
-    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
-    transform: translate(30px, -20px) scale(1.05);
-  }
-  50% {
-    border-radius: 50% 50% 20% 80% / 25% 80% 20% 75%;
-    transform: translate(-20px, 30px) scale(0.95);
-  }
-  75% {
-    border-radius: 20% 80% 50% 50% / 80% 20% 80% 20%;
-    transform: translate(20px, 10px) scale(1.02);
-  }
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+@keyframes float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-12px) scale(1.01); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.1; transform: scale(1); }
+  50% { opacity: 0.25; transform: scale(1.05); }
+}
+
+@keyframes particle-drift {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: 0.6; }
+  90% { opacity: 0.3; }
+  100% { transform: translateY(-200px) translateX(80px); opacity: 0; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.05); }
+}
+
+@keyframes ping-subtle {
+  0% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.2); opacity: 0.2; }
+  100% { transform: scale(1); opacity: 0.6; }
+}
+
+@keyframes bar-wave {
+  0% { transform: scaleY(0.3); }
+  50% { transform: scaleY(1); }
+  100% { transform: scaleY(0.3); }
+}
+
+@keyframes tick-up {
+  0% { transform: translateY(4px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes shine {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes border-glow {
+  0%, 100% { border-color: rgba(255, 255, 255, 0.08); }
+  50% { border-color: rgba(255, 255, 255, 0.25); }
+}
+
+@keyframes border-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.shine-effect {
+  background: linear-gradient(
+    110deg,
+    transparent 0%,
+    transparent 40%,
+    rgba(255, 255, 255, 0.06) 45%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.06) 55%,
+    transparent 60%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shine 3s ease-in-out infinite;
+}
+
+.grid-pattern {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }
