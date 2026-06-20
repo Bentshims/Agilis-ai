@@ -12,9 +12,9 @@ export default function DashboardLayout({
     <TooltipProvider delayDuration={0}>
       <SidebarProvider defaultOpen={true}>
         <AppSidebar />
-        <SidebarInset>
+        <SidebarInset className="h-svh overflow-hidden md:peer-data-[variant=inset]:m-0">
           <DashboardHeader />
-          <main className="flex-1 p-4 md:p-6 lg:p-8">
+          <main className="flex-1 overflow-y-auto scrollbar-glass p-4 md:p-6 lg:p-8">
             {children}
           </main>
         </SidebarInset>

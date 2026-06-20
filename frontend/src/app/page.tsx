@@ -191,7 +191,7 @@ export default function Home() {
             <Link href="/signin" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
               Connexion
             </Link>
-            <Button variant="default" size="sm" className="h-9 px-4 text-sm" asChild>
+            <Button variant="default" size="sm" className="h-9 px-4 text-sm bg-emerald text-black hover:bg-emerald/80" asChild>
               <Link href="/signup">Essai gratuit</Link>
             </Button>
           </div>
@@ -217,6 +217,15 @@ export default function Home() {
 
           <div className="relative z-10 mx-auto flex min-h-[calc(100dvh-8rem)] max-w-7xl flex-col items-center gap-12 px-6 lg:flex-row lg:gap-16">
             <motion.div style={{ y: heroY, opacity: heroOpacity }} className="flex-1 text-center lg:text-left">
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                className="mb-6 flex items-center gap-3"
+              >
+                <span className="h-px w-8 bg-emerald/60" />
+                <span className="text-[11px] font-medium tracking-[0.2em] uppercase text-emerald">Plateforme IA</span>
+              </motion.div>
               <motion.h1
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -243,7 +252,7 @@ export default function Home() {
                 transition={{ duration: 0.6, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
                 className="mt-6 flex flex-wrap items-center gap-3"
               >
-                <Button variant="default" size="default" className="h-10 px-6 text-sm" asChild>
+                <Button variant="default" size="default" className="h-10 px-6 text-sm bg-emerald text-black hover:bg-emerald/80" asChild>
                   <Link href="/signup">Commencer gratuitement</Link>
                 </Button>
                 <Button variant="outline" size="default" className="h-10 px-5 text-sm" asChild>
@@ -543,11 +552,11 @@ export default function Home() {
                     transition={{ duration: 0.5, delay: i * 0.15, ease: [0.16, 1, 0.3, 1] }}
                     className="relative flex gap-6 md:gap-10"
                   >
-                    <div className="relative z-10 flex size-16 shrink-0 items-center justify-center rounded-2xl border border-border/20 bg-card shadow-lg">
-                      <span className="text-lg font-bold text-foreground/80">{item.step}</span>
+                    <div className="relative z-10 flex size-16 shrink-0 items-center justify-center rounded-2xl border border-emerald/20 bg-card shadow-lg">
+                      <span className="text-lg font-bold text-emerald">{item.step}</span>
                     </div>
                     <div className={`relative flex-1 rounded-2xl border border-border/10 bg-gradient-to-br ${item.gradient} p-6 backdrop-blur-sm`}>
-                      <div className="absolute -left-1 top-8 size-2 rounded-full bg-foreground/80 hidden md:block animate-ping-subtle" />
+                      <div className="absolute -left-1 top-8 size-2 rounded-full bg-emerald hidden md:block animate-ping-subtle shadow-[0_0_6px_1px_oklch(0.7_0.2_160/0.5)]" />
                       <h3 className="text-lg font-semibold text-foreground">{item.title}</h3>
                       <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.desc}</p>
                     </div>
@@ -564,7 +573,7 @@ export default function Home() {
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-white/[0.02] via-transparent to-transparent" />
           <div className="relative z-10 mx-auto max-w-6xl px-6">
             <div className="pointer-events-none absolute -right-20 top-0 opacity-10">
-              <svg viewBox="0 0 200 200" width="200" height="200" fill="none" stroke="currentColor" strokeWidth="0.5">
+              <svg viewBox="0 0 200 200" width="200" height="200" fill="none" stroke="oklch(0.7 0.2 160)" strokeWidth="0.5" className="opacity-20">
                 <circle cx="100" cy="100" r="80" />
                 <circle cx="100" cy="100" r="60" />
                 <circle cx="100" cy="100" r="40" />
@@ -682,7 +691,7 @@ export default function Home() {
                     <div className="group relative mx-auto max-w-xl">
                       <div className="absolute -inset-[1px] rounded-2xl bg-gradient-to-br from-white/20 via-transparent to-white/10" />
                       <div className="relative rounded-2xl border border-border/20 bg-card/40 p-8 text-center backdrop-blur-sm transition-all duration-500 hover:border-white/20">
-                        <svg viewBox="0 0 24 24" fill="currentColor" className="mx-auto mb-6 size-8 text-foreground/20">
+                        <svg viewBox="0 0 24 24" fill="currentColor" className="mx-auto mb-6 size-8 text-emerald/30">
                         <path d="M9.983 3v7.391c0 5.704-3.731 9.57-8.983 10.609l-.995-2.151c2.432-.917 3.995-3.638 3.995-5.849h-4v-10h9.983zm14.017 0v7.391c0 5.704-3.748 9.571-9 10.609l-.996-2.151c2.433-.917 3.996-3.638 3.996-5.849h-3.983v-10h9.983z" />
                       </svg>
                       <p className="text-base leading-relaxed text-foreground/80">{t.content}</p>
@@ -736,7 +745,7 @@ export default function Home() {
                         <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/20 via-transparent to-white/10 opacity-0 animate-pulse" />
                       </div>
                       <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
-                        <span className="inline-flex items-center rounded-full bg-foreground px-3 py-1 text-xs font-medium text-background shadow-lg">
+                        <span className="inline-flex items-center rounded-full bg-emerald px-3 py-1 text-xs font-medium text-black shadow-lg shadow-emerald/20">
                           Le plus populaire
                         </span>
                       </div>
@@ -764,7 +773,7 @@ export default function Home() {
                     <Button
                       variant={plan.popular ? "default" : "outline"}
                       size="lg"
-                      className="mt-8 h-10 w-full text-sm"
+                      className={`mt-8 h-10 w-full text-sm ${plan.popular ? "bg-emerald text-black hover:bg-emerald/80" : ""}`}
                       asChild
                     >
                       <Link href={plan.name === "Enterprise" ? "/contact" : "/signup"}>
@@ -853,7 +862,7 @@ export default function Home() {
                 Rejoignez les entreprises qui utilisent déjà Agilis AI pour décupler leur productivité.
               </p>
               <div className="mt-10 flex items-center justify-center gap-4">
-                <Button variant="default" size="lg" className="h-12 px-8 text-sm" asChild>
+                <Button variant="default" size="lg" className="h-12 px-8 text-sm bg-emerald text-black hover:bg-emerald/80" asChild>
                   <Link href="/signup">Commencer gratuitement</Link>
                 </Button>
                 <Button variant="outline" size="lg" className="h-12 px-8 text-sm" asChild>

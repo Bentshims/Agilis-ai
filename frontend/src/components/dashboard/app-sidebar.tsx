@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { cn } from "@/lib/utils"
+import { LayoutGroup, motion } from "motion/react"
 import {
   Sidebar,
   SidebarContent,
@@ -13,7 +13,6 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarSeparator,
 } from "@/components/ui/sidebar"
 import { HugeiconsIcon } from "@hugeicons/react"
 import {
@@ -21,8 +20,6 @@ import {
   AiBrainIcon,
   TaskIcon,
   SettingsIcon,
-  CreditCardIcon,
-  UserGroupIcon,
   LifebuoyIcon,
   Logout04Icon,
 } from "@hugeicons/core-free-icons"
@@ -33,24 +30,18 @@ const navItems = [
   { label: "Tâches", href: "/tasks", icon: TaskIcon },
 ]
 
-const settingsItems = [
-  { label: "Paramètres", href: "/settings", icon: SettingsIcon },
-  { label: "Facturation", href: "/settings/billing", icon: CreditCardIcon },
-  { label: "Membres", href: "/settings/members", icon: UserGroupIcon },
-]
-
 export function AppSidebar() {
   const pathname = usePathname()
 
   return (
-    <Sidebar variant="inset" collapsible="icon" className="border-r border-white/[0.06]">
+    <Sidebar variant="inset" collapsible="icon" className="border-r border-border/50">
       <SidebarHeader>
         <Link href="/dashboard" className="self-start group-data-[collapsible=icon]:self-center">
           <span className="group-data-[collapsible=icon]:hidden flex items-center">
             <img
               src="/agilis-dark-theme-logo.png"
               alt="Agilis AI"
-              className="h-7 w-auto hidden dark:block  border border-white"
+              className="h-7 w-auto hidden dark:block"
             />
             <img
               src="/agilis-light-theme-logo.png"
@@ -62,12 +53,12 @@ export function AppSidebar() {
             <img
               src="/agilis-dark-theme-favicon.png"
               alt="Agilis AI"
-              className="size-4 hidden dark:block"
+              className="h-5 w-auto hidden dark:block"
             />
             <img
               src="/agilis-light-theme-favicon.png"
               alt="Agilis AI"
-              className="size-4 dark:hidden"
+              className="h-5 w-auto dark:hidden"
             />
           </span>
         </Link>
@@ -76,57 +67,51 @@ export function AppSidebar() {
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupContent>
-            <SidebarMenu>
-              {navItems.map((item) => {
-                const isActive = pathname === item.href
-                return (
-                  <SidebarMenuItem key={item.href}>
-                    <SidebarMenuButton
-                      asChild
-                      isActive={isActive}
-                      tooltip={item.label}
-                    >
-                      <Link href={item.href}>
-                        <HugeiconsIcon icon={item.icon} size={16} />
-                        <span>{item.label}</span>
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                )
-              })}
+            <SidebarMenu className="relative">
+              <LayoutGroup>
+                {navItems.map((item) => {
+                  const isActive = pathname === item.href
+                  return (
+                    <SidebarMenuItem key={item.href}>
+                      <div className="relative">
+                        {isActive && (
+                          <motion.div
+                            layoutId="sidebar-indicator"
+                            className="absolute left-0 top-1/2 -translate-y-1/2 h-4 w-0.5 rounded-full bg-emerald shadow-[0_0_8px_1px_oklch(0.7_0.2_160/0.4)]"
+                            transition={{ type: "spring", stiffness: 500, damping: 35 }}
+                          />
+                        )}
+                        <SidebarMenuButton
+                          asChild
+                          isActive={isActive}
+                          tooltip={item.label}
+                        >
+                          <Link href={item.href}>
+                            <HugeiconsIcon icon={item.icon} size={16} />
+                            <span>{item.label}</span>
+                          </Link>
+                        </SidebarMenuButton>
+                      </div>
+                    </SidebarMenuItem>
+                  )
+                })}
+              </LayoutGroup>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
 
-        <SidebarSeparator />
-
-        <SidebarGroup>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {settingsItems.map((item) => {
-                const isActive = pathname === item.href || pathname.startsWith(item.href + "/")
-                return (
-                  <SidebarMenuItem key={item.href}>
-                    <SidebarMenuButton
-                      asChild
-                      isActive={isActive}
-                      tooltip={item.label}
-                    >
-                      <Link href={item.href}>
-                        <HugeiconsIcon icon={item.icon} size={16} />
-                        <span>{item.label}</span>
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                )
-              })}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
       </SidebarContent>
 
       <SidebarFooter className="p-2">
         <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild tooltip="Paramètres">
+              <Link href="/settings">
+                <HugeiconsIcon icon={SettingsIcon} size={16} />
+                <span>Paramètres</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
           <SidebarMenuItem>
             <SidebarMenuButton asChild tooltip="Support">
               <Link href="#">

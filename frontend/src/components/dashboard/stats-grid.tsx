@@ -39,6 +39,7 @@ export function StatsGrid({ stats }: StatsGridProps) {
         change={stats.avgTimeChange}
         icon={<HugeiconsIcon icon={ClockIcon} size={14} />}
         format="time"
+        accent
       />
     </div>
   )

@@ -10,24 +10,25 @@ interface StatCardProps {
   change: number
   icon: React.ReactNode
   format?: "percent" | "time"
+  accent?: boolean
 }
 
-export function StatCard({ label, value, change, icon, format }: StatCardProps) {
+export function StatCard({ label, value, change, icon, format, accent }: StatCardProps) {
   const isPositive = change >= 0
 
   return (
-    <GlassCard glow hover className="flex flex-col gap-3">
+    <GlassCard glow hover accent={accent} className="flex flex-col gap-3">
       <div className="flex items-center justify-between">
-        <span className="text-xs font-medium tracking-wide text-white/50 uppercase">
+        <span className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
           {label}
         </span>
-        <div className="flex size-8 items-center justify-center rounded-lg bg-white/[0.04] text-white/60">
+        <div className="flex size-8 items-center justify-center rounded-lg bg-foreground/[0.04] text-foreground/60">
           {icon}
         </div>
       </div>
 
       <div className="flex items-baseline gap-2">
-        <span className="text-3xl font-bold tracking-tight text-white">
+        <span className="text-3xl font-bold tracking-tight text-foreground">
           {value}
         </span>
         <motion.span
@@ -36,7 +37,7 @@ export function StatCard({ label, value, change, icon, format }: StatCardProps) 
           transition={{ duration: 0.4, delay: 0.2 }}
           className={cn(
             "flex items-center gap-0.5 text-xs font-medium",
-            isPositive ? "text-white/60" : "text-red-400"
+            isPositive ? "text-muted-foreground" : "text-emerald-400"
           )}
         >
           <svg
@@ -53,14 +54,14 @@ export function StatCard({ label, value, change, icon, format }: StatCardProps) 
         </motion.span>
       </div>
 
-      <div className="h-1 w-full overflow-hidden rounded-full bg-white/[0.04]">
+      <div className="h-1 w-full overflow-hidden rounded-full bg-foreground/[0.04]">
         <motion.div
           initial={{ width: 0 }}
           animate={{ width: `${Math.min(Math.abs(change) * 4, 100)}%` }}
           transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
           className={cn(
             "h-full rounded-full",
-            isPositive ? "bg-gradient-to-r from-white/30 to-white/10" : "bg-gradient-to-r from-red-500 to-rose-400"
+            isPositive ? "bg-gradient-to-r from-foreground/30 to-foreground/10" : "bg-gradient-to-r from-emerald-500 to-emerald-400"
           )}
         />
       </div>
